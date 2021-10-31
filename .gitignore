@@ -3,7 +3,8 @@
 # Get latest from https://github.com/github/gitignore/blob/master/Unity.gitignore
 #
 # Should ignore cards data file
-rawCardsData.json
+./rawCardsData.json
+./node_modules
 
 /[Ll]ibrary/
 /[Tt]emp/
