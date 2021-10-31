@@ -1,8 +1,9 @@
 const fs = require('fs')
+
+// Need to get all cards file from scryfall
 const allCards = require('./json/AllCards.json')
 const allPrices = require('./json/AllPrices.json')
 
-// Analysis
 let analysis = {
     totalCards: 0,
     withPrice: 0,
@@ -102,4 +103,38 @@ function getPriceVariation(paperPrice, mtgoPrice) {
 
     if(variation > analysis.maxPriceIncrease) analysis.maxPriceIncrease = variation
     if(variation < analysis.maxPriceDiscount) analysis.maxPriceDiscount = variation
+}
+
+module.exports = {
+    getCardByUUID: function getCard(uuid) {
+        const cards = require('./cards.json')
+        let card = {}
+
+        card = cards[cards.findIndex(card => card.uuid === uuid)]
+
+        //TODO return actual object
+        console.log(card)
+    },
+    getAllCards: function getAllCards() {
+        console.log(getFinalAllCards())
+    },
+    storeAllCards: function storeAllCards(fileName) {
+
+        let finalAllCards = getFinalAllCards()
+    
+        fs.writeFileSync(fileName, JSON.stringify(finalAllCards))
+    
+    },
+    getAnalysis: function getAnalysis() {
+
+        finalAllCards = getFinalAllCards()
+    
+        analysis.totalCards = finalAllCards.length
+        analysis.averagePriceVariation = analysis.priceVariation.reduce((num1, num2) => num1 + num2, 0) / analysis.priceVariation.length
+    
+        delete analysis.priceVariation
+    
+        console.log(analysis)
+    
+    }
 }
